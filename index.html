@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFID SI 2026 - Interactive Mockup Collection</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .tagline { font-size: 1.2rem; opacity: 0.9; }
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-out;
+        }
+        .info-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .mockup-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .mockup-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .mockup-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .mockup-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2E75B6;
+            margin-bottom: 0.5rem;
+        }
+        .mockup-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .mockup-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #2E75B6 0%, #1e5a8e 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .mockup-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(46, 117, 182, 0.4);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+        .status-ready {
+            background: rgba(112, 173, 71, 0.2);
+            color: #70AD47;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            opacity: 0.8;
+            animation: fadeIn 1.2s ease-out;
+        }
+        @media (max-width: 768px) {
+            .mockup-grid { grid-template-columns: 1fr; }
+            .logo { font-size: 2rem; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .mockup-card { animation: slideUp 0.6s ease-out forwards; opacity: 0; }
+        .mockup-card:nth-child(1) { animation-delay: 0.1s; }
+        .mockup-card:nth-child(2) { animation-delay: 0.2s; }
+        .mockup-card:nth-child(3) { animation-delay: 0.3s; }
+        .mockup-card:nth-child(4) { animation-delay: 0.4s; }
+        .mockup-card:nth-child(5) { animation-delay: 0.5s; }
+        .mockup-card:nth-child(6) { animation-delay: 0.6s; }
+        .mockup-card:nth-child(7) { animation-delay: 0.7s; }
+        .mockup-card:nth-child(8) { animation-delay: 0.8s; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚀 INFID SI 2026</div>
+            <div class="tagline">Interactive Mockup Collection</div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-title">📋 Comprehensive UI/UX Mockup Demo</div>
+            <p>Explore interactive HTML mockups for the INFID SI 2026 integrated information system. Each module demonstrates the user interface, key features, and interactions of the proposed Frappe-based platform. All mockups are fully functional with working buttons, search features, and drag-and-drop capabilities.</p>
+        </div>
+
+        <div class="mockup-grid">
+            <a href="dashboard_impact.html" class="mockup-card">
+                <div class="mockup-icon">📊</div>
+                <div class="mockup-title">Impact Dashboard</div>
+                <div class="mockup-description">
+                    Real-time visualization of program impact with KPI cards, achievement charts, and geographic distribution mapping.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="donor_crm.html" class="mockup-card">
+                <div class="mockup-icon">👥</div>
+                <div class="mockup-title">Donor CRM</div>
+                <div class="mockup-description">
+                    Comprehensive donor management with live search, filtering capabilities, and detailed donor profile tracking.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="project_kanban.html" class="mockup-card">
+                <div class="mockup-icon">📋</div>
+                <div class="mockup-title">Project Kanban</div>
+                <div class="mockup-description">
+                    Visual project tracking with drag-and-drop Kanban board, progress monitoring, budget management, and team collaboration.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="knowledge_base.html" class="mockup-card">
+                <div class="mockup-icon">📚</div>
+                <div class="mockup-title">Knowledge Base</div>
+                <div class="mockup-description">
+                    Organized document repository with folder tree structure, powerful search functionality, and version control system.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="lesson_learned.html" class="mockup-card">
+                <div class="mockup-icon">💡</div>
+                <div class="mockup-title">Lesson Learned</div>
+                <div class="mockup-description">
+                    Structured evaluation database with categorization, detailed insights tracking, and recommendations repository.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="communities.html" class="mockup-card">
+                <div class="mockup-icon">💬</div>
+                <div class="mockup-title">Communities</div>
+                <div class="mockup-description">
+                    Discussion forum platform with Q&A functionality, voting system, category filtering, and knowledge sharing.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="login.html" class="mockup-card">
+                <div class="mockup-icon">🔐</div>
+                <div class="mockup-title">Login & Security</div>
+                <div class="mockup-description">
+                    Secure authentication flow with 2FA support, password recovery, session management, and comprehensive security features.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+
+            <a href="admin_panel.html" class="mockup-card">
+                <div class="mockup-icon">⚙️</div>
+                <div class="mockup-title">Admin Panel</div>
+                <div class="mockup-description">
+                    System administration interface with user management, real-time monitoring, activity logs, and system health indicators.
+                </div>
+                <span class="status-badge status-ready">✓ Ready</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p style="font-size: 1.2rem; margin-bottom: 0.5rem;"><strong>INFID SI 2026 Proposal</strong></p>
+            <p>Integrated Information System powered by Frappe Framework</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                💰 Investment: Rp 485.000.000 | ⏱️ Timeline: 6 Months | 📈 ROI: 60-70% Efficiency Gain
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.85rem;">
+                All 8 Mockups Ready • Fully Interactive • Responsive Design
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Management - INFID SI 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2E75B6 0%, #1e5a8e 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2E75B6;
+            margin-bottom: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2E75B6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e5a8e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(46, 117, 182, 0.3);
+        }
+
+        .btn-success {
+            background: #70AD47;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #5a8c38;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(112, 173, 71, 0.3);
+        }
+
+        .search-filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .filter-select {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .donor-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .donor-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .badge-corporate {
+            background: rgba(46, 117, 182, 0.1);
+            color: #2E75B6;
+        }
+
+        .badge-foundation {
+            background: rgba(112, 173, 71, 0.1);
+            color: #70AD47;
+        }
+
+        .badge-individual {
+            background: rgba(91, 155, 213, 0.1);
+            color: #5B9BD5;
+        }
+
+        .badge-active {
+            background: rgba(112, 173, 71, 0.1);
+            color: #70AD47;
+        }
+
+        .badge-inactive {
+            background: rgba(153, 153, 153, 0.1);
+            color: #999;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-link {
+            color: #2E75B6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .action-link:hover {
+            color: #1e5a8e;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .search-filter-bar {
+                flex-direction: column;
+            }
+
+            .donor-table {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">INFID SI 2026</div>
+            <nav class="nav">
+                <a href="dashboard_impact.html">Dashboard</a>
+                <a href="#donors">Donors</a>
+                <a href="project_kanban.html">Projects</a>
+                <a href="knowledge_base.html">Knowledge</a>
+                <a href="#reports">Reports</a>
+                <a href="#settings">Settings</a>
+            </nav>
+            <div>👤 Admin</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Donor Management</h1>
+            
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="alert('New Donor form would open')">
+                    + New Donor
+                </button>
+                <button class="btn btn-success" onclick="alert('Export functionality')">
+                    📤 Export
+                </button>
+            </div>
+        </div>
+
+        <div class="search-filter-bar">
+            <input type="text" class="search-box" placeholder="🔍 Search donors..." id="searchInput">
+            <select class="filter-select">
+                <option>Filter: All Donors</option>
+                <option>Corporate Only</option>
+                <option>Foundation Only</option>
+                <option>Individual Only</option>
+                <option>Active Only</option>
+                <option>Inactive Only</option>
+            </select>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Donors</div>
+                <div class="stat-value" style="color: #5B9BD5;">1,247</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active (2025)</div>
+                <div class="stat-value" style="color: #70AD47;">892</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">New This Month</div>
+                <div class="stat-value" style="color: #FFC000;">34</div>
+            </div>
+        </div>
+
+        <div class="donor-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Donor Name</th>
+                        <th>Type</th>
+                        <th>Total Donated</th>
+                        <th>Last Donation</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="donorTableBody">
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                🏢 PT. Maju Bersama
+                            </div>
+                        </td>
+                        <td><span class="badge badge-corporate">Corporate</span></td>
+                        <td><strong>Rp 150.000.000</strong></td>
+                        <td>2025-12-15</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                🏛️ Yayasan Peduli Sesama
+                            </div>
+                        </td>
+                        <td><span class="badge badge-foundation">Foundation</span></td>
+                        <td><strong>Rp 85.500.000</strong></td>
+                        <td>2025-11-28</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                👤 John Anderson
+                            </div>
+                        </td>
+                        <td><span class="badge badge-individual">Individual</span></td>
+                        <td><strong>Rp 12.000.000</strong></td>
+                        <td>2025-12-01</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                🏢 CV. Teknologi Masa Depan
+                            </div>
+                        </td>
+                        <td><span class="badge badge-corporate">Corporate</span></td>
+                        <td><strong>Rp 45.000.000</strong></td>
+                        <td>2025-10-20</td>
+                        <td><span class="badge badge-inactive">Inactive</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                👤 Sarah Williams
+                            </div>
+                        </td>
+                        <td><span class="badge badge-individual">Individual</span></td>
+                        <td><strong>Rp 5.000.000</strong></td>
+                        <td>2025-12-10</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                🏢 Bank Nasional Indonesia
+                            </div>
+                        </td>
+                        <td><span class="badge badge-corporate">Corporate</span></td>
+                        <td><strong>Rp 200.000.000</strong></td>
+                        <td>2025-11-15</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="donor-name">
+                                🏛️ Community Foundation Asia
+                            </div>
+                        </td>
+                        <td><span class="badge badge-foundation">Foundation</span></td>
+                        <td><strong>Rp 95.000.000</strong></td>
+                        <td>2025-12-05</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-links">
+                                <a href="#" class="action-link">👁️ View</a>
+                                <a href="#" class="action-link">✏️ Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#donorTableBody tr');
+            
+            rows.forEach(row => {
+                const donorName = row.querySelector('.donor-name').textContent.toLowerCase();
+                if (donorName.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Action links
+        document.querySelectorAll('.action-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const action = this.textContent.includes('View') ? 'View' : 'Edit';
+                const donorName = this.closest('tr').querySelector('.donor-name').textContent.trim();
+                alert(`${action} details for: ${donorName}`);
+            });
+        });
+    </script>
+</body>
+</html>
