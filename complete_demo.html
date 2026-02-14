@@ -1,772 +1,1053 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFID SI 2026 - Complete Demo</title>
+    <title>Project Summary — INFID SI 2026</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: garetbook, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            color: #333;
+        :root {
+            --teal: #007987;
+            --teal-dark: #005f6b;
+            --orange: #F49B3E;
+            --orange-light: #fdf3e7;
+            --dark: #1b1f2e;
+            --text: #333;
+            --text-light: #666;
+            --bg: #f7f8fa;
+            --white: #fff;
+            --border: #e4e7ec;
+            --green: #70AD47;
         }
 
-        /* Header */
-        .site-header {
-            background: #fff;
-            border-bottom: 3px solid #007987;
-            padding: 0.8rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: garetbook, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
         }
-        .header-content {
+
+        /* ── Topbar ── */
+        .topbar {
+            background: var(--dark);
+            color: #ccc;
+            font-size: 0.8rem;
+            padding: 0.4rem 0;
+        }
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1600px;
+        }
+        .topbar a { color: var(--orange); text-decoration: none; }
+
+        /* ── Header ── */
+        .header {
+            background: var(--white);
+            border-bottom: 3px solid var(--teal);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+        }
+        .header-inner {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .header-logo img { height: 42px; }
-        .nav { display: flex; gap: 0.25rem; }
-        .nav a {
-            color: #333;
+        .header-nav { display: flex; gap: 0.25rem; }
+        .header-nav a {
+            color: var(--text);
             text-decoration: none;
             padding: 0.45rem 0.8rem;
             border-radius: 6px;
             font-size: 0.88rem;
             transition: background 0.2s, color 0.2s;
         }
-        .nav a:hover { background: #007987; color: #fff; }
-        .nav a.active { background: #007987; color: #fff; }
-
-        /* Container */
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 2rem;
+        .header-nav a:hover,
+        .header-nav a.active {
+            background: var(--teal);
+            color: var(--white);
+        }
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--dark);
+            margin: 5px 0;
+            transition: 0.3s;
         }
 
-        /* Tab Navigation */
-        .tab-nav {
-            background: white;
+        /* ── Tab Navigation ── */
+        .tab-section {
+            max-width: 1200px;
+            margin: -1.5rem auto 0;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        .tab-bar {
+            background: var(--white);
             border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0.8rem 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             overflow-x: auto;
         }
-
         .tab-btn {
-            padding: 0.8rem 1.5rem;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s;
+            font-size: 0.88rem;
+            font-family: inherit;
+            color: var(--text-light);
+            transition: all 0.2s;
             white-space: nowrap;
+            user-select: none;
         }
-
         .tab-btn:hover {
-            border-color: #007987;
-            color: #007987;
+            border-color: var(--teal);
+            color: var(--teal);
         }
-
         .tab-btn.active {
-            background: #007987;
-            color: white;
-            border-color: #007987;
+            background: var(--teal);
+            color: var(--white);
+            border-color: var(--teal);
         }
 
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
+        /* ── Hero Banner ── */
+        .hero-banner {
+            background: var(--teal);
+            color: var(--white);
+            padding: 3.5rem 2rem;
         }
-
-        .tab-content.active {
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .hero-banner h1 {
+            font-size: 2.2rem;
+            line-height: 1.25;
+            margin-bottom: 0.8rem;
+        }
+        .hero-banner h1 em {
+            color: var(--orange);
+            font-style: normal;
+        }
+        .hero-banner p {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        .hero-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 1.3rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .hero-stat:hover { background: rgba(255,255,255,0.2); }
+        .hero-stat strong {
+            font-size: 1.8rem;
+            display: block;
+        }
+        .hero-stat span {
+            font-size: 0.82rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* ── Content Area ── */
+        .content-area {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 1rem;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeUp 0.4s ease; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Demo Frame */
-        .demo-frame {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            min-height: 600px;
+        /* ── Shared Components ── */
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
         }
-
-        .demo-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #007987;
-            margin-bottom: 0.5rem;
-        }
-
-        .demo-subtitle {
-            color: #666;
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
             margin-bottom: 2rem;
         }
 
-        /* Feature Grid */
-        .feature-grid {
+        .info-box {
+            background: var(--orange-light);
+            border-left: 4px solid var(--orange);
+            padding: 1.3rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 2rem;
+        }
+        .info-box strong { color: var(--teal-dark); }
+
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover {
+            border-color: var(--teal);
+            box-shadow: 0 6px 20px rgba(0,121,135,0.1);
+            transform: translateY(-3px);
+        }
+        .card-accent { height: 4px; background: var(--teal); }
+        .card:hover .card-accent { background: var(--orange); }
+        .card-body { padding: 1.3rem; }
+        .card-category {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--teal);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+        }
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .card-footer {
+            padding: 0.8rem 1.3rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+        }
+        .card-status { color: var(--green); font-weight: 600; }
+        .card-link-text { color: var(--teal); font-weight: 600; }
+        .card:hover .card-link-text { color: var(--orange); }
+        a.card { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+
+        /* Module list */
+        .module-list { display: grid; gap: 1rem; }
+        .module-row {
+            display: flex;
             gap: 1.5rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 10px;
+            align-items: flex-start;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .module-row:hover {
+            border-color: var(--teal);
+            box-shadow: 0 4px 16px rgba(0,121,135,0.08);
+        }
+        .module-num {
+            background: var(--teal);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .module-row h3 { color: var(--teal); margin-bottom: 0.3rem; font-size: 1.05rem; }
+        .module-row p { color: var(--text-light); font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.6rem; }
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .btn-teal { background: var(--teal); color: var(--white); }
+        .btn-teal:hover { background: var(--teal-dark); }
+        .btn-white { background: var(--white); color: var(--teal); border-color: var(--border); }
+        .btn-white:hover { border-color: var(--teal); }
+
+        /* Tech stack */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+        .stack-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        .stack-card h3 {
+            color: var(--teal);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        .stack-card li {
+            list-style: none;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .stack-card li:last-child { border-bottom: none; }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.3rem;
+            text-align: center;
+        }
+        .stat-card strong {
+            font-size: 1.8rem;
+            color: var(--green);
+            display: block;
+        }
+        .stat-card span {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+            display: block;
+        }
+
+        /* Benefit cards */
+        .benefit-group {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .benefit-group h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.8rem;
+        }
+        .benefit-group ul { padding-left: 1.2rem; color: var(--text-light); line-height: 1.9; }
+        .benefit-group li strong { color: var(--text); }
+
+        /* CTA section */
+        .cta-section {
+            background: var(--teal);
+            color: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
             margin-top: 2rem;
         }
+        .cta-section h2 { font-size: 1.6rem; margin-bottom: 0.8rem; }
+        .cta-section p { opacity: 0.9; line-height: 1.7; margin-bottom: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-actions .btn-white { background: var(--white); color: var(--teal); border: none; padding: 0.7rem 1.8rem; font-size: 0.95rem; }
+        .cta-actions .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4); padding: 0.7rem 1.8rem; font-size: 0.95rem; }
+        .cta-actions .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
 
-        .feature-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
+        /* Nav modules grid */
+        .nav-modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .nav-mod {
+            background: var(--white);
+            border: 1px solid var(--border);
             border-radius: 10px;
-            border-left: 4px solid #007987;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateX(5px);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .feature-desc {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #007987;
             padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        .info-title {
-            font-weight: bold;
-            color: #005f6b;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            gap: 2rem;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            flex: 1;
-            min-width: 150px;
             text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #007987;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.3rem;
-        }
-
-        /* Button */
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .nav-mod:hover {
+            border-color: var(--teal);
+            box-shadow: 0 6px 20px rgba(0,121,135,0.1);
+            transform: translateY(-3px);
+        }
+        .nav-mod h3 { font-size: 1rem; color: var(--teal); margin-bottom: 0.3rem; }
+        .nav-mod p { font-size: 0.82rem; color: var(--text-light); }
+
+        /* ── Proposal Section ── */
+        .proposal {
+            max-width: 1200px;
+            margin: 1rem auto 0;
+            padding: 0 2rem 2rem;
+        }
+        .proposal-inner {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .proposal-header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+        }
+        .proposal-header h2 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .proposal-header p { font-size: 0.85rem; opacity: 0.7; }
+        .proposal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .proposal-item {
+            padding: 1.5rem;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+        .proposal-item:last-child { border-right: none; }
+        .proposal-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--teal);
+            display: block;
+        }
+        .proposal-label {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+            display: block;
         }
 
-        .btn-primary {
-            background: #007987;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #005f6b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 121, 135, 0.3);
-        }
-
-        .btn-success {
-            background: #70AD47;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #5a8c38;
-        }
-
-        /* Footer */
+        /* ── Footer ── */
         .footer {
-            background: white;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: var(--dark);
+            color: rgba(255,255,255,0.6);
+            padding: 2rem 0;
             text-align: center;
+            font-size: 0.85rem;
         }
-
-        .footer-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #007987;
-            margin-bottom: 1rem;
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
+        .footer-inner img { height: 32px; filter: brightness(0) invert(1); opacity: 0.5; margin-bottom: 0.8rem; }
+        .footer a { color: var(--orange); text-decoration: none; }
 
-        .footer-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; }
+            .proposal-grid { grid-template-columns: 1fr 1fr; }
+            .proposal-item { border-bottom: 1px solid var(--border); }
         }
-
-        .footer-stat {
-            text-align: center;
-        }
-
-        .footer-stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #70AD47;
-        }
-
-        .footer-stat-label {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .nav { display: none; }
-            .tab-nav { flex-direction: column; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .stats-bar { flex-direction: column; }
+            .header-nav { display: none; }
+            .header-nav.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-bottom: 2px solid var(--teal);
+                padding: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            }
+            .mobile-toggle { display: block; }
+            .hero-banner { padding: 2.5rem 1.5rem; }
+            .hero-banner h1 { font-size: 1.7rem; }
+            .tab-bar { gap: 0.3rem; }
+            .tab-btn { padding: 0.5rem 0.9rem; font-size: 0.8rem; }
+            .topbar { display: none; }
+            .module-row { flex-direction: column; }
+            .proposal-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="index.html" class="header-logo"><img src="INFID-LOGO-ok_2000-1.png" alt="INFID"></a>
-            <nav class="nav">
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-inner">
+            <span>Proposal Sistem Informasi Terintegrasi INFID 2026</span>
+            <span>Diajukan oleh <a href="https://www.combine.or.id">Combine Resources Institution</a></span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="header-logo">
+                <img src="INFID-LOGO-ok_2000-1.png" alt="INFID">
+            </a>
+            <nav class="header-nav" id="mainNav">
                 <a href="index.html">Home</a>
                 <a href="dashboard_impact.html">Dashboard</a>
-                <a href="donor_crm.html">Donors</a>
+                <a href="donor_crm.html">Donor CRM</a>
                 <a href="project_kanban.html">Projects</a>
                 <a href="knowledge_base.html">Knowledge</a>
                 <a href="communities.html">Communities</a>
                 <a href="complete_demo.html" class="active">Demo</a>
             </nav>
-            <div style="font-size:0.88rem;color:#666">Admin</div>
+            <button class="mobile-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Tab Navigation -->
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="switchTab(0)">📋 Overview</button>
-            <button class="tab-btn" onclick="switchTab(1)">🎯 Features</button>
-            <button class="tab-btn" onclick="switchTab(2)">📊 Modules</button>
-            <button class="tab-btn" onclick="switchTab(3)">💻 Technology</button>
-            <button class="tab-btn" onclick="switchTab(4)">📈 Benefits</button>
-            <button class="tab-btn" onclick="switchTab(5)">🚀 Get Started</button>
-        </div>
-
-        <!-- Tab 0: Overview -->
-        <div class="tab-content active" id="tab-0">
-            <div class="demo-frame">
-                <h1 class="demo-title">INFID SI 2026 - Integrated Information System</h1>
-                <p class="demo-subtitle">Comprehensive platform for NGO operations powered by Frappe Framework</p>
-
-                <div class="info-box">
-                    <div class="info-title">🎯 Project Summary</div>
-                    <p>INFID SI 2026 is a comprehensive integrated information system designed to streamline and optimize INFID's operations across donor management, project tracking, knowledge sharing, and impact measurement. Built on the powerful Frappe Framework, this solution provides a unified platform for all organizational needs.</p>
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-inner">
+            <div>
+                <h1>Project Summary<br><em>INFID SI 2026</em></h1>
+                <p>Jelajahi seluruh fitur dan modul sistem informasi terintegrasi INFID. Setiap mockup interaktif menunjukkan alur kerja, antarmuka pengguna, dan kapabilitas platform berbasis Frappe Framework.</p>
+            </div>
+            <div class="hero-stats-grid">
+                <div class="hero-stat">
+                    <strong>8</strong>
+                    <span>Modul Terintegrasi</span>
                 </div>
-
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <div class="stat-value">Rp 485M</div>
-                        <div class="stat-label">Investment</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">6 Months</div>
-                        <div class="stat-label">Timeline</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">8 Modules</div>
-                        <div class="stat-label">Integrated</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">100K+</div>
-                        <div class="stat-label">Users Capacity</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">60-70%</div>
-                        <div class="stat-label">Efficiency Gain</div>
-                    </div>
+                <div class="hero-stat">
+                    <strong>6</strong>
+                    <span>Bulan Implementasi</span>
                 </div>
-
-                <h3 style="margin-bottom: 1rem; color: #333;">🎨 Explore Interactive Mockups</h3>
-                <div class="feature-grid">
-                    <a href="dashboard_impact.html" class="feature-card" style="text-decoration: none; color: inherit;">
-                        <div class="feature-icon">📊</div>
-                        <div class="feature-title">Impact Dashboard</div>
-                        <div class="feature-desc">Real-time KPIs, charts, and analytics</div>
-                    </a>
-                    <a href="donor_crm.html" class="feature-card" style="text-decoration: none; color: inherit;">
-                        <div class="feature-icon">👥</div>
-                        <div class="feature-title">Donor CRM</div>
-                        <div class="feature-desc">Complete donor management with search</div>
-                    </a>
-                    <a href="project_kanban.html" class="feature-card" style="text-decoration: none; color: inherit;">
-                        <div class="feature-icon">📋</div>
-                        <div class="feature-title">Project Kanban</div>
-                        <div class="feature-desc">Drag-and-drop project tracking</div>
-                    </a>
-                    <a href="knowledge_base.html" class="feature-card" style="text-decoration: none; color: inherit;">
-                        <div class="feature-icon">📚</div>
-                        <div class="feature-title">Knowledge Base</div>
-                        <div class="feature-desc">Document repository with search</div>
-                    </a>
+                <div class="hero-stat">
+                    <strong>60–70%</strong>
+                    <span>Peningkatan Efisiensi</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>100%</strong>
+                    <span>Open Source</span>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Tab 1: Features -->
-        <div class="tab-content" id="tab-1">
-            <div class="demo-frame">
-                <h1 class="demo-title">Key Features</h1>
-                <p class="demo-subtitle">Comprehensive functionality designed for NGO excellence</p>
-
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <div class="feature-title">Live Search</div>
-                        <div class="feature-desc">Real-time filtering across donors, documents, and projects</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <div class="feature-title">Drag & Drop</div>
-                        <div class="feature-desc">Intuitive Kanban boards for project management</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <div class="feature-title">Real-time Analytics</div>
-                        <div class="feature-desc">Live dashboards with KPIs and visualizations</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔐</div>
-                        <div class="feature-title">Advanced Security</div>
-                        <div class="feature-desc">2FA, encryption, RBAC, and audit trails</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <div class="feature-title">Mobile Responsive</div>
-                        <div class="feature-desc">Works perfectly on all devices</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔄</div>
-                        <div class="feature-title">Workflow Automation</div>
-                        <div class="feature-desc">Automated approval processes and notifications</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📈</div>
-                        <div class="feature-title">Impact Tracking</div>
-                        <div class="feature-desc">Measure and visualize program outcomes</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💾</div>
-                        <div class="feature-title">Automated Backup</div>
-                        <div class="feature-desc">3-tier backup strategy for data safety</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 2: Modules -->
-        <div class="tab-content" id="tab-2">
-            <div class="demo-frame">
-                <h1 class="demo-title">8 Integrated Modules</h1>
-                <p class="demo-subtitle">Complete solution for all organizational needs</p>
-
-                <div class="info-box">
-                    <div class="info-title">🎯 All Modules Work Together Seamlessly</div>
-                    <p>Data flows automatically between modules. A donor can be linked to projects, donations trigger reports, project outcomes feed into impact dashboards, and everything is searchable from the knowledge base.</p>
-                </div>
-
-                <div style="display: grid; gap: 2rem; margin-top: 2rem;">
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">👥</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">1. Donor CRM</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Complete donor lifecycle management with profiles, donation tracking, campaigns, and automated communications.</p>
-                            <a href="donor_crm.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">📋</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">2. Project Management</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Visual Kanban boards, Gantt charts, budget tracking, milestone monitoring, and resource allocation.</p>
-                            <a href="project_kanban.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">📚</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">3. Knowledge Base</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Centralized document repository with folders, version control, powerful search, and access permissions.</p>
-                            <a href="knowledge_base.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">💡</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">4. Lesson Learned Database</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Structured evaluations with what worked, challenges, and recommendations for continuous improvement.</p>
-                            <a href="lesson_learned.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">💬</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">5. Communities of Practice</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Discussion forums, Q&A platform, voting system, and knowledge sharing across teams.</p>
-                            <a href="communities.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">📊</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">6. Analytical Dashboards</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">Three specialized dashboards: Impact, Fundraising, and Financial with real-time metrics.</p>
-                            <a href="dashboard_impact.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">🔐</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">7. Security & Authentication</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">2FA, SSO, RBAC, encrypted storage, session management, and comprehensive audit logging.</p>
-                            <a href="login.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div style="font-size: 3rem;">⚙️</div>
-                        <div style="flex: 1;">
-                            <h3 style="color: #007987; margin-bottom: 0.5rem;">8. Admin Panel</h3>
-                            <p style="color: #666; margin-bottom: 0.5rem;">System administration, user management, monitoring, backup/restore, and configuration.</p>
-                            <a href="admin_panel.html" class="btn btn-primary">View Demo →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 3: Technology -->
-        <div class="tab-content" id="tab-3">
-            <div class="demo-frame">
-                <h1 class="demo-title">Technology Stack</h1>
-                <p class="demo-subtitle">Modern, open-source, and proven technologies</p>
-
-                <div class="info-box">
-                    <div class="info-title">🎯 Why Frappe Framework?</div>
-                    <p><strong>Zero licensing costs</strong>, proven by 10,000+ organizations globally, highly customizable with Python & JavaScript, enables complete data sovereignty through on-premise deployment, and provides a modern tech stack with RESTful APIs and responsive UI.</p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #007987; margin-bottom: 1rem;">Backend</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Frappe Framework v15</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Python 3.10+</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ MariaDB 10.11 LTS</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Redis 7.x (Caching)</li>
-                            <li style="padding: 0.5rem 0;">✅ RESTful API</li>
-                        </ul>
-                    </div>
-
-                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #007987; margin-bottom: 1rem;">Frontend</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ React.js</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Modern JavaScript (ES6+)</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Responsive Design</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Progressive Web App</li>
-                            <li style="padding: 0.5rem 0;">✅ Mobile-First UI</li>
-                        </ul>
-                    </div>
-
-                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #007987; margin-bottom: 1rem;">Infrastructure</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Ubuntu 22.04 LTS</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Nginx (Web Server)</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Let's Encrypt SSL</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Prometheus + Grafana</li>
-                            <li style="padding: 0.5rem 0;">✅ Automated Backups</li>
-                        </ul>
-                    </div>
-
-                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #007987; margin-bottom: 1rem;">Security</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ TLS 1.3 Encryption</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Two-Factor Auth (2FA)</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ RBAC & Permissions</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Audit Logging</li>
-                            <li style="padding: 0.5rem 0;">✅ WAF & IDS/IPS</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; background: #d4edda; padding: 2rem; border-radius: 10px; border-left: 4px solid #70AD47;">
-                    <h3 style="color: #155724; margin-bottom: 1rem;">💰 100% Open Source = Zero Licensing Costs</h3>
-                    <p style="color: #155724;">Every component in the stack is open-source, meaning <strong>no ongoing license fees</strong>. This significantly reduces Total Cost of Ownership (TCO) and eliminates vendor lock-in risks.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 4: Benefits -->
-        <div class="tab-content" id="tab-4">
-            <div class="demo-frame">
-                <h1 class="demo-title">Business Benefits & ROI</h1>
-                <p class="demo-subtitle">Measurable improvements across all operations</p>
-
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <div class="stat-value" style="color: #70AD47;">70%</div>
-                        <div class="stat-label">Report Gen Time ↓</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="color: #70AD47;">50%</div>
-                        <div class="stat-label">Data Entry Time ↓</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="color: #70AD47;">60%</div>
-                        <div class="stat-label">Communication Time ↓</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="color: #70AD47;">90%</div>
-                        <div class="stat-label">Search Time ↓</div>
-                    </div>
-                </div>
-
-                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
-                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #007987; margin-bottom: 1rem;">⚡ Efficiency Gains</h3>
-                        <ul style="color: #666; line-height: 1.8;">
-                            <li><strong>Report Generation:</strong> From 2-3 days to 2-3 hours (70% reduction)</li>
-                            <li><strong>Data Entry:</strong> 50% reduction through automation and smart forms</li>
-                            <li><strong>Donor Communication:</strong> 60% faster with email automation</li>
-                            <li><strong>Information Search:</strong> From 30 minutes to under 5 seconds (90% reduction)</li>
-                        </ul>
-                    </div>
-
-                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #70AD47; margin-bottom: 1rem;">📈 Quality Improvements</h3>
-                        <ul style="color: #666; line-height: 1.8;">
-                            <li><strong>100% Data Centralization:</strong> Single source of truth for all information</li>
-                            <li><strong>Real-time Visibility:</strong> Instant access to current status across all programs</li>
-                            <li><strong>Data-Driven Decisions:</strong> Analytics and dashboards enable informed choices</li>
-                            <li><strong>Increased Donor Trust:</strong> Professional reporting and transparency</li>
-                            <li><strong>Enhanced Collaboration:</strong> Teams work together seamlessly</li>
-                            <li><strong>Institutional Memory:</strong> Knowledge preserved and easily accessible</li>
-                        </ul>
-                    </div>
-
-                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <h3 style="color: #FFC000; margin-bottom: 1rem;">🔒 Security & Compliance</h3>
-                        <ul style="color: #666; line-height: 1.8;">
-                            <li><strong>Data Sovereignty:</strong> On-premise deployment keeps data in Indonesia</li>
-                            <li><strong>Full Encryption:</strong> Data protected at rest and in transit</li>
-                            <li><strong>Granular Access Control:</strong> Role-based permissions ensure data security</li>
-                            <li><strong>Complete Audit Trail:</strong> Every action logged for accountability</li>
-                            <li><strong>3-Tier Backup:</strong> Data protected against all failure scenarios</li>
-                            <li><strong>Real-time Monitoring:</strong> Immediate alerts for security events</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 5: Get Started -->
-        <div class="tab-content" id="tab-5">
-            <div class="demo-frame">
-                <h1 class="demo-title">Ready to Get Started?</h1>
-                <p class="demo-subtitle">Explore all mockups and see the system in action</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                    <a href="index.html" style="text-decoration: none;">
-                        <div style="background: #007987; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🏠</div>
-                            <h3 style="margin-bottom: 0.5rem;">Home</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">All mockups overview</p>
-                        </div>
-                    </a>
-
-                    <a href="dashboard_impact.html" style="text-decoration: none;">
-                        <div style="background: #5B9BD5; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-                            <h3 style="margin-bottom: 0.5rem;">Dashboard</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Real-time analytics</p>
-                        </div>
-                    </a>
-
-                    <a href="donor_crm.html" style="text-decoration: none;">
-                        <div style="background: #70AD47; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-                            <h3 style="margin-bottom: 0.5rem;">Donor CRM</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Live search demo</p>
-                        </div>
-                    </a>
-
-                    <a href="project_kanban.html" style="text-decoration: none;">
-                        <div style="background: #FFC000; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
-                            <h3 style="margin-bottom: 0.5rem;">Kanban</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Drag & drop projects</p>
-                        </div>
-                    </a>
-
-                    <a href="knowledge_base.html" style="text-decoration: none;">
-                        <div style="background: #9B59B6; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-                            <h3 style="margin-bottom: 0.5rem;">Knowledge</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Document library</p>
-                        </div>
-                    </a>
-
-                    <a href="lesson_learned.html" style="text-decoration: none;">
-                        <div style="background: #E74C3C; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
-                            <h3 style="margin-bottom: 0.5rem;">Lessons</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Evaluations database</p>
-                        </div>
-                    </a>
-
-                    <a href="communities.html" style="text-decoration: none;">
-                        <div style="background: #3498DB; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
-                            <h3 style="margin-bottom: 0.5rem;">Communities</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">Discussion forum</p>
-                        </div>
-                    </a>
-
-                    <a href="admin_panel.html" style="text-decoration: none;">
-                        <div style="background: #34495E; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
-                            <h3 style="margin-bottom: 0.5rem;">Admin</h3>
-                            <p style="opacity: 0.9; font-size: 0.9rem;">System management</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div style="margin-top: 3rem; background: #007987; color: white; padding: 3rem; border-radius: 16px; text-align: center;">
-                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">🚀 Next Steps</h2>
-                    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; line-height: 1.6;">Review the proposal document, explore all interactive mockups, and contact the project team for technical discussions or implementation planning.</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="index.html" class="btn btn-success" style="font-size: 1.1rem; padding: 1rem 2rem;">View All Mockups</a>
-                        <a href="login.html" class="btn" style="background: white; color: #007987; font-size: 1.1rem; padding: 1rem 2rem;">Try Login Flow</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-title">INFID SI 2026 - Integrated Information System</div>
-            <p style="color: #666; margin-bottom: 1rem;">Powered by Frappe Framework • 100% Open Source • On-Premise Deployment</p>
-            
-            <div class="footer-stats">
-                <div class="footer-stat">
-                    <div class="footer-stat-value">Rp 485M</div>
-                    <div class="footer-stat-label">Total Investment</div>
-                </div>
-                <div class="footer-stat">
-                    <div class="footer-stat-value">6 Months</div>
-                    <div class="footer-stat-label">Implementation</div>
-                </div>
-                <div class="footer-stat">
-                    <div class="footer-stat-value">8 Modules</div>
-                    <div class="footer-stat-label">Fully Integrated</div>
-                </div>
-                <div class="footer-stat">
-                    <div class="footer-stat-value">60-70%</div>
-                    <div class="footer-stat-label">Efficiency Gain</div>
-                </div>
-            </div>
-
-            <p style="margin-top: 2rem; color: #999; font-size: 0.9rem;">
-                © 2026 INFID SI 2026 Proposal • All Interactive Mockups Available
-            </p>
+    <!-- Tab Navigation -->
+    <div class="tab-section">
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(0)">Ikhtisar</button>
+            <button class="tab-btn" onclick="switchTab(1)">Fitur Utama</button>
+            <button class="tab-btn" onclick="switchTab(2)">Modul</button>
+            <button class="tab-btn" onclick="switchTab(3)">Teknologi</button>
+            <button class="tab-btn" onclick="switchTab(4)">Manfaat &amp; ROI</button>
+            <button class="tab-btn" onclick="switchTab(5)">Mulai</button>
         </div>
     </div>
 
+    <!-- Content Area -->
+    <div class="content-area">
+
+        <!-- Tab 0: Ikhtisar -->
+        <div class="tab-content active" id="tab-0">
+            <h2 class="section-title">Ikhtisar Sistem</h2>
+            <p class="section-subtitle">Platform terpadu untuk pengelolaan program, donor, pengetahuan, dan kolaborasi tim organisasi INFID.</p>
+
+            <div class="info-box">
+                <strong>Ringkasan Proyek —</strong>
+                INFID SI 2026 adalah sistem informasi terintegrasi yang dirancang untuk merampingkan dan mengoptimalkan operasional INFID mulai dari manajemen donor, pelacakan proyek, berbagi pengetahuan, hingga pengukuran dampak. Dibangun di atas Frappe Framework, solusi ini menyediakan platform terpadu untuk seluruh kebutuhan organisasi.
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <strong style="color:var(--teal)">Rp 485 Jt</strong>
+                    <span>Investasi</span>
+                </div>
+                <div class="stat-card">
+                    <strong style="color:var(--teal)">6 Bulan</strong>
+                    <span>Timeline</span>
+                </div>
+                <div class="stat-card">
+                    <strong style="color:var(--teal)">8</strong>
+                    <span>Modul Terintegrasi</span>
+                </div>
+                <div class="stat-card">
+                    <strong style="color:var(--teal)">100K+</strong>
+                    <span>Kapasitas Pengguna</span>
+                </div>
+                <div class="stat-card">
+                    <strong style="color:var(--green)">60–70%</strong>
+                    <span>Peningkatan Efisiensi</span>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom:1rem; color:var(--dark);">Jelajahi Mockup Interaktif</h3>
+            <div class="card-grid">
+                <a href="dashboard_impact.html" class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Operasional</div>
+                        <div class="card-title">Impact Dashboard</div>
+                        <div class="card-desc">KPI real-time, grafik pencapaian, dan peta distribusi.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status">Siap</span>
+                        <span class="card-link-text">Buka &rarr;</span>
+                    </div>
+                </a>
+                <a href="donor_crm.html" class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Operasional</div>
+                        <div class="card-title">Donor CRM</div>
+                        <div class="card-desc">Manajemen donor dengan pencarian langsung dan filter.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status">Siap</span>
+                        <span class="card-link-text">Buka &rarr;</span>
+                    </div>
+                </a>
+                <a href="project_kanban.html" class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Operasional</div>
+                        <div class="card-title">Project Kanban</div>
+                        <div class="card-desc">Drag-and-drop Kanban, progress, dan anggaran proyek.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status">Siap</span>
+                        <span class="card-link-text">Buka &rarr;</span>
+                    </div>
+                </a>
+                <a href="knowledge_base.html" class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Pengetahuan</div>
+                        <div class="card-title">Knowledge Base</div>
+                        <div class="card-desc">Repositori dokumen, pencarian, dan kontrol versi.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status">Siap</span>
+                        <span class="card-link-text">Buka &rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tab 1: Fitur Utama -->
+        <div class="tab-content" id="tab-1">
+            <h2 class="section-title">Fitur Utama</h2>
+            <p class="section-subtitle">Fungsionalitas komprehensif yang dirancang untuk keunggulan operasional organisasi nirlaba.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Pencarian</div>
+                        <div class="card-title">Pencarian Real-time</div>
+                        <div class="card-desc">Filter langsung di seluruh data donor, dokumen, dan proyek tanpa reload halaman.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Manajemen</div>
+                        <div class="card-title">Drag &amp; Drop</div>
+                        <div class="card-desc">Papan Kanban intuitif untuk manajemen proyek dan pelacakan tugas secara visual.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Analitik</div>
+                        <div class="card-title">Dashboard Real-time</div>
+                        <div class="card-desc">Dashboard langsung dengan KPI, visualisasi data, dan metrik yang selalu terkini.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Keamanan</div>
+                        <div class="card-title">Keamanan Berlapis</div>
+                        <div class="card-desc">Autentikasi 2FA, enkripsi, kontrol akses berbasis peran, dan jejak audit lengkap.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Responsif</div>
+                        <div class="card-title">Mobile Responsive</div>
+                        <div class="card-desc">Berfungsi sempurna di semua perangkat — desktop, tablet, dan smartphone.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Otomasi</div>
+                        <div class="card-title">Otomasi Alur Kerja</div>
+                        <div class="card-desc">Proses persetujuan otomatis, notifikasi, dan pengingat terjadwal.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Dampak</div>
+                        <div class="card-title">Pelacakan Dampak</div>
+                        <div class="card-desc">Mengukur dan memvisualisasikan hasil program untuk pelaporan yang transparan.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-accent"></div>
+                    <div class="card-body">
+                        <div class="card-category">Infrastruktur</div>
+                        <div class="card-title">Backup Otomatis</div>
+                        <div class="card-desc">Strategi backup 3-lapis untuk keamanan data dan pemulihan bencana.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Modul -->
+        <div class="tab-content" id="tab-2">
+            <h2 class="section-title">8 Modul Terintegrasi</h2>
+            <p class="section-subtitle">Solusi lengkap untuk seluruh kebutuhan organisasi — data mengalir otomatis antar modul.</p>
+
+            <div class="info-box">
+                <strong>Integrasi Mulus —</strong>
+                Donor dapat dihubungkan dengan proyek, donasi memicu laporan, hasil proyek masuk ke dashboard dampak, dan semuanya dapat dicari dari knowledge base.
+            </div>
+
+            <div class="module-list">
+                <div class="module-row">
+                    <div class="module-num">1</div>
+                    <div style="flex:1">
+                        <h3>Donor CRM</h3>
+                        <p>Manajemen siklus hidup donor lengkap dengan profil, pelacakan donasi, kampanye, dan komunikasi otomatis.</p>
+                        <a href="donor_crm.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">2</div>
+                    <div style="flex:1">
+                        <h3>Manajemen Proyek</h3>
+                        <p>Papan Kanban visual, Gantt chart, pelacakan anggaran, pemantauan milestone, dan alokasi sumber daya.</p>
+                        <a href="project_kanban.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">3</div>
+                    <div style="flex:1">
+                        <h3>Knowledge Base</h3>
+                        <p>Repositori dokumen terpusat dengan folder, kontrol versi, pencarian yang kuat, dan izin akses.</p>
+                        <a href="knowledge_base.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">4</div>
+                    <div style="flex:1">
+                        <h3>Database Lesson Learned</h3>
+                        <p>Evaluasi terstruktur dengan dokumentasi keberhasilan, tantangan, dan rekomendasi untuk perbaikan berkelanjutan.</p>
+                        <a href="lesson_learned.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">5</div>
+                    <div style="flex:1">
+                        <h3>Communities of Practice</h3>
+                        <p>Forum diskusi, platform tanya-jawab, sistem voting, dan berbagi pengetahuan lintas tim.</p>
+                        <a href="communities.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">6</div>
+                    <div style="flex:1">
+                        <h3>Dashboard Analitik</h3>
+                        <p>Tiga dashboard khusus: Dampak, Penggalangan Dana, dan Keuangan dengan metrik real-time.</p>
+                        <a href="dashboard_impact.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">7</div>
+                    <div style="flex:1">
+                        <h3>Keamanan &amp; Autentikasi</h3>
+                        <p>2FA, SSO, kontrol akses berbasis peran (RBAC), penyimpanan terenkripsi, manajemen sesi, dan logging audit.</p>
+                        <a href="login.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+                <div class="module-row">
+                    <div class="module-num">8</div>
+                    <div style="flex:1">
+                        <h3>Panel Admin</h3>
+                        <p>Administrasi sistem, manajemen pengguna, monitoring, backup/restore, dan konfigurasi.</p>
+                        <a href="admin_panel.html" class="btn btn-teal">Lihat Demo &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Teknologi -->
+        <div class="tab-content" id="tab-3">
+            <h2 class="section-title">Stack Teknologi</h2>
+            <p class="section-subtitle">Teknologi modern, open-source, dan telah terbukti di lebih dari 10.000 organisasi global.</p>
+
+            <div class="info-box">
+                <strong>Mengapa Frappe Framework? —</strong>
+                Tanpa biaya lisensi, terbukti oleh 10.000+ organisasi global, sangat dapat disesuaikan dengan Python &amp; JavaScript, memungkinkan kedaulatan data penuh melalui deployment on-premise, dan menyediakan stack modern dengan RESTful API serta UI responsif.
+            </div>
+
+            <div class="stack-grid">
+                <div class="stack-card">
+                    <h3>Backend</h3>
+                    <ul>
+                        <li>Frappe Framework v15</li>
+                        <li>Python 3.10+</li>
+                        <li>MariaDB 10.11 LTS</li>
+                        <li>Redis 7.x (Caching)</li>
+                        <li>RESTful API</li>
+                    </ul>
+                </div>
+                <div class="stack-card">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>React.js</li>
+                        <li>JavaScript Modern (ES6+)</li>
+                        <li>Desain Responsif</li>
+                        <li>Progressive Web App</li>
+                        <li>Mobile-First UI</li>
+                    </ul>
+                </div>
+                <div class="stack-card">
+                    <h3>Infrastruktur</h3>
+                    <ul>
+                        <li>Ubuntu 24.04.3 LTS</li>
+                        <li>Nginx (Web Server)</li>
+                        <li>Let's Encrypt SSL</li>
+                        <li>Prometheus + Grafana</li>
+                        <li>Backup Otomatis</li>
+                    </ul>
+                </div>
+                <div class="stack-card">
+                    <h3>Keamanan</h3>
+                    <ul>
+                        <li>Enkripsi TLS 1.3</li>
+                        <li>Two-Factor Auth (2FA)</li>
+                        <li>RBAC &amp; Permissions</li>
+                        <li>Audit Logging</li>
+                        <li>WAF &amp; IDS/IPS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top:2rem; background:#eaf7ee; border-left-color:var(--green);">
+                <strong style="color:#155724;">100% Open Source = Nol Biaya Lisensi —</strong>
+                Setiap komponen dalam stack bersifat open-source, yang berarti <strong>tidak ada biaya lisensi berkelanjutan</strong>. Ini secara signifikan mengurangi Total Cost of Ownership (TCO) dan menghilangkan risiko vendor lock-in.
+            </div>
+        </div>
+
+        <!-- Tab 4: Manfaat & ROI -->
+        <div class="tab-content" id="tab-4">
+            <h2 class="section-title">Manfaat Bisnis &amp; ROI</h2>
+            <p class="section-subtitle">Peningkatan terukur di seluruh operasional organisasi.</p>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <strong>70%</strong>
+                    <span>Waktu Laporan &darr;</span>
+                </div>
+                <div class="stat-card">
+                    <strong>50%</strong>
+                    <span>Waktu Input Data &darr;</span>
+                </div>
+                <div class="stat-card">
+                    <strong>60%</strong>
+                    <span>Waktu Komunikasi &darr;</span>
+                </div>
+                <div class="stat-card">
+                    <strong>90%</strong>
+                    <span>Waktu Pencarian &darr;</span>
+                </div>
+            </div>
+
+            <div class="benefit-group">
+                <h3 style="color:var(--teal)">Peningkatan Efisiensi</h3>
+                <ul>
+                    <li><strong>Pembuatan Laporan:</strong> Dari 2–3 hari menjadi 2–3 jam (pengurangan 70%)</li>
+                    <li><strong>Input Data:</strong> Pengurangan 50% melalui otomasi dan formulir cerdas</li>
+                    <li><strong>Komunikasi Donor:</strong> 60% lebih cepat dengan otomasi email</li>
+                    <li><strong>Pencarian Informasi:</strong> Dari 30 menit menjadi kurang dari 5 detik (pengurangan 90%)</li>
+                </ul>
+            </div>
+
+            <div class="benefit-group">
+                <h3 style="color:var(--green)">Peningkatan Kualitas</h3>
+                <ul>
+                    <li><strong>100% Sentralisasi Data:</strong> Satu sumber kebenaran untuk semua informasi</li>
+                    <li><strong>Visibilitas Real-time:</strong> Akses instan ke status terkini seluruh program</li>
+                    <li><strong>Keputusan Berbasis Data:</strong> Analitik dan dashboard untuk pilihan yang tepat</li>
+                    <li><strong>Kepercayaan Donor:</strong> Pelaporan profesional dan transparansi</li>
+                    <li><strong>Kolaborasi Tim:</strong> Tim bekerja bersama secara mulus</li>
+                    <li><strong>Memori Institusional:</strong> Pengetahuan tersimpan dan mudah diakses</li>
+                </ul>
+            </div>
+
+            <div class="benefit-group">
+                <h3 style="color:var(--orange)">Keamanan &amp; Kepatuhan</h3>
+                <ul>
+                    <li><strong>Kedaulatan Data:</strong> Deployment on-premise menjaga data di Indonesia</li>
+                    <li><strong>Enkripsi Penuh:</strong> Data terlindungi saat diam dan saat transit</li>
+                    <li><strong>Kontrol Akses Granular:</strong> Izin berbasis peran menjamin keamanan</li>
+                    <li><strong>Jejak Audit Lengkap:</strong> Setiap tindakan tercatat untuk akuntabilitas</li>
+                    <li><strong>Backup 3-Lapis:</strong> Data terlindungi dari semua skenario kegagalan</li>
+                    <li><strong>Monitoring Real-time:</strong> Peringatan langsung untuk kejadian keamanan</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 5: Mulai -->
+        <div class="tab-content" id="tab-5">
+            <h2 class="section-title">Siap untuk Memulai?</h2>
+            <p class="section-subtitle">Jelajahi semua mockup interaktif dan lihat sistem beraksi.</p>
+
+            <div class="nav-modules">
+                <a href="index.html" class="nav-mod">
+                    <h3>Home</h3>
+                    <p>Ikhtisar semua mockup</p>
+                </a>
+                <a href="dashboard_impact.html" class="nav-mod">
+                    <h3>Dashboard</h3>
+                    <p>Analitik real-time</p>
+                </a>
+                <a href="donor_crm.html" class="nav-mod">
+                    <h3>Donor CRM</h3>
+                    <p>Demo pencarian langsung</p>
+                </a>
+                <a href="project_kanban.html" class="nav-mod">
+                    <h3>Project Kanban</h3>
+                    <p>Drag &amp; drop proyek</p>
+                </a>
+                <a href="knowledge_base.html" class="nav-mod">
+                    <h3>Knowledge Base</h3>
+                    <p>Perpustakaan dokumen</p>
+                </a>
+                <a href="lesson_learned.html" class="nav-mod">
+                    <h3>Lesson Learned</h3>
+                    <p>Database evaluasi</p>
+                </a>
+                <a href="communities.html" class="nav-mod">
+                    <h3>Communities</h3>
+                    <p>Forum diskusi</p>
+                </a>
+                <a href="admin_panel.html" class="nav-mod">
+                    <h3>Admin Panel</h3>
+                    <p>Manajemen sistem</p>
+                </a>
+            </div>
+
+            <div class="cta-section">
+                <h2>Langkah Selanjutnya</h2>
+                <p>Tinjau dokumen proposal, jelajahi semua mockup interaktif, dan hubungi tim proyek di Combine Resources Institution untuk diskusi teknis atau perencanaan implementasi.</p>
+                <div class="cta-actions">
+                    <a href="index.html" class="btn btn-white">Lihat Semua Mockup</a>
+                    <a href="login.html" class="btn btn-outline">Coba Alur Login</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Proposal -->
+    <section class="proposal">
+        <div class="proposal-inner">
+            <div class="proposal-header">
+                <h2>Ringkasan Proposal</h2>
+                <p>Sistem Informasi Terintegrasi INFID 2026 — Dikembangkan oleh Combine Resources Institution</p>
+            </div>
+            <div class="proposal-grid">
+                <div class="proposal-item">
+                    <span class="proposal-value">Rp 485 Juta</span>
+                    <span class="proposal-label">Investasi</span>
+                </div>
+                <div class="proposal-item">
+                    <span class="proposal-value">6 Bulan</span>
+                    <span class="proposal-label">Timeline</span>
+                </div>
+                <div class="proposal-item">
+                    <span class="proposal-value">8 Modul</span>
+                    <span class="proposal-label">Terintegrasi Penuh</span>
+                </div>
+                <div class="proposal-item">
+                    <span class="proposal-value">60–70%</span>
+                    <span class="proposal-label">Peningkatan Efisiensi</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <img src="INFID-LOGO-ok_2000-1.png" alt="INFID"><br>
+            <p>&copy; 2026 INFID — International NGO Forum on Indonesian Development</p>
+            <p style="margin-top:0.5rem;">Dikembangkan oleh <a href="https://www.combine.or.id">Combine Resources Institution</a></p>
+        </div>
+    </footer>
+
     <script>
         function switchTab(index) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active from all buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('tab-' + index).classList.add('active');
             document.querySelectorAll('.tab-btn')[index].classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelector('.content-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     </script>
 </body>
