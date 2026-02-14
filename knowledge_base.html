@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base - INFID SI 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: garetbook, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
+        .site-header{background:#fff;border-bottom:3px solid #007987;padding:0.8rem 0;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}.header-content{display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto;padding:0 2rem}.header-logo img{height:42px}.nav{display:flex;gap:0.25rem}.nav a{color:#333;text-decoration:none;padding:0.45rem 0.8rem;border-radius:6px;font-size:0.88rem;transition:background 0.2s,color 0.2s}.nav a:hover{background:#007987;color:#fff}.nav a.active{background:#007987;color:#fff}
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-title { font-size: 2rem; font-weight: bold; color: #007987; margin-bottom: 0.5rem; }
+        .page-subtitle { color: #666; margin-bottom: 1.5rem; }
+        .main-layout { display: grid; grid-template-columns: 250px 1fr; gap: 2rem; margin-top: 2rem; }
+        .sidebar { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .folder-tree { list-style: none; }
+        .folder-item { padding: 0.5rem; cursor: pointer; border-radius: 6px; margin-bottom: 0.3rem; }
+        .folder-item:hover { background: #f0f0f0; }
+        .folder-item.active { background: rgba(0, 121, 135, 0.1); color: #007987; font-weight: bold; }
+        .folder-item.child { margin-left: 1.5rem; font-size: 0.9rem; }
+        .content-area { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .search-bar { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .doc-table { width: 100%; border-collapse: collapse; }
+        .doc-table th { background: #f8f9fa; padding: 1rem; text-align: left; border-bottom: 2px solid #e9ecef; }
+        .doc-table td { padding: 1rem; border-bottom: 1px solid #e9ecef; }
+        .doc-table tr:hover { background: #f8f9fa; }
+        .doc-icon { font-size: 1.5rem; margin-right: 0.5rem; }
+        .badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .badge-pdf { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
+        .badge-docx { background: rgba(13, 110, 253, 0.1); color: #0d6efd; }
+        .btn-upload { padding: 0.7rem 1.5rem; background: #70AD47; color: white; border: none; border-radius: 8px; cursor: pointer; float: right; }
+        .btn-upload:hover { background: #5a8c38; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="header-logo"><img src="INFID-LOGO-ok_2000-1.png" alt="INFID"></a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="dashboard_impact.html">Dashboard</a>
+                <a href="donor_crm.html">Donors</a>
+                <a href="project_kanban.html">Projects</a>
+                <a href="knowledge_base.html" class="active">Knowledge</a>
+                <a href="communities.html">Communities</a>
+            </nav>
+            <div style="font-size:0.88rem;color:#666">Admin</div>
+        </div>
+    </header>
+    <div class="container">
+        <h1 class="page-title">Knowledge Base</h1>
+        <p class="page-subtitle">Centralized document repository with powerful search</p>
+        <button class="btn-upload" onclick="alert('Upload dialog would open')">+ Upload Document</button>
+        <div class="main-layout">
+            <div class="sidebar">
+                <h3 style="margin-bottom: 1rem;">Folder Structure</h3>
+                <ul class="folder-tree">
+                    <li class="folder-item active">📁 All Documents</li>
+                    <li class="folder-item">📂 Annual Reports</li>
+                    <li class="folder-item">📂 Project Reports</li>
+                    <li class="folder-item child">📄 2025 Reports</li>
+                    <li class="folder-item child">📄 2024 Reports</li>
+                    <li class="folder-item">📂 SOPs & Guidelines</li>
+                    <li class="folder-item child">📄 Financial</li>
+                    <li class="folder-item child">📄 HR Policies</li>
+                    <li class="folder-item">📂 Research Papers</li>
+                    <li class="folder-item">📂 Templates</li>
+                </ul>
+            </div>
+            <div class="content-area">
+                <input type="text" class="search-bar" placeholder="🔍 Search documents, SOPs, reports..." id="searchDocs">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Document Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="docTableBody">
+                        <tr>
+                            <td><i class="fas fa-file-pdf doc-icon" style="color: #dc3545;"></i>Financial Procedures Manual 2025</td>
+                            <td><span class="badge badge-pdf">PDF</span></td>
+                            <td>2.4 MB</td>
+                            <td>2025-12-15</td>
+                            <td><a href="#" onclick="alert('Download'); return false;">📥 Download</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-file-word doc-icon" style="color: #0d6efd;"></i>HR Onboarding Checklist</td>
+                            <td><span class="badge badge-docx">DOCX</span></td>
+                            <td>156 KB</td>
+                            <td>2025-12-10</td>
+                            <td><a href="#" onclick="alert('Download'); return false;">📥 Download</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-file-pdf doc-icon" style="color: #dc3545;"></i>Procurement Guidelines</td>
+                            <td><span class="badge badge-pdf">PDF</span></td>
+                            <td>1.8 MB</td>
+                            <td>2025-11-28</td>
+                            <td><a href="#" onclick="alert('Download'); return false;">📥 Download</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.folder-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.folder-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        document.getElementById('searchDocs').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('#docTableBody tr').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(term) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

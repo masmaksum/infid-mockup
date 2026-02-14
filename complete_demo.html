@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFID SI 2026 - Complete Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: garetbook, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        .site-header {
+            background: #fff;
+            border-bottom: 3px solid #007987;
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .header-logo img { height: 42px; }
+        .nav { display: flex; gap: 0.25rem; }
+        .nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.45rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav a:hover { background: #007987; color: #fff; }
+        .nav a.active { background: #007987; color: #fff; }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            border-color: #007987;
+            color: #007987;
+        }
+
+        .tab-btn.active {
+            background: #007987;
+            color: white;
+            border-color: #007987;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Demo Frame */
+        .demo-frame {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+
+        .demo-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007987;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #007987;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #007987;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            font-weight: bold;
+            color: #005f6b;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007987;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        /* Button */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #007987;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005f6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 121, 135, 0.3);
+        }
+
+        .btn-success {
+            background: #70AD47;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #5a8c38;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007987;
+            margin-bottom: 1rem;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-stat {
+            text-align: center;
+        }
+
+        .footer-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #70AD47;
+        }
+
+        .footer-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .tab-nav { flex-direction: column; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .stats-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="header-logo"><img src="INFID-LOGO-ok_2000-1.png" alt="INFID"></a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="dashboard_impact.html">Dashboard</a>
+                <a href="donor_crm.html">Donors</a>
+                <a href="project_kanban.html">Projects</a>
+                <a href="knowledge_base.html">Knowledge</a>
+                <a href="communities.html">Communities</a>
+                <a href="complete_demo.html" class="active">Demo</a>
+            </nav>
+            <div style="font-size:0.88rem;color:#666">Admin</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(0)">📋 Overview</button>
+            <button class="tab-btn" onclick="switchTab(1)">🎯 Features</button>
+            <button class="tab-btn" onclick="switchTab(2)">📊 Modules</button>
+            <button class="tab-btn" onclick="switchTab(3)">💻 Technology</button>
+            <button class="tab-btn" onclick="switchTab(4)">📈 Benefits</button>
+            <button class="tab-btn" onclick="switchTab(5)">🚀 Get Started</button>
+        </div>
+
+        <!-- Tab 0: Overview -->
+        <div class="tab-content active" id="tab-0">
+            <div class="demo-frame">
+                <h1 class="demo-title">INFID SI 2026 - Integrated Information System</h1>
+                <p class="demo-subtitle">Comprehensive platform for NGO operations powered by Frappe Framework</p>
+
+                <div class="info-box">
+                    <div class="info-title">🎯 Project Summary</div>
+                    <p>INFID SI 2026 is a comprehensive integrated information system designed to streamline and optimize INFID's operations across donor management, project tracking, knowledge sharing, and impact measurement. Built on the powerful Frappe Framework, this solution provides a unified platform for all organizational needs.</p>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value">Rp 485M</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">6 Months</div>
+                        <div class="stat-label">Timeline</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8 Modules</div>
+                        <div class="stat-label">Integrated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100K+</div>
+                        <div class="stat-label">Users Capacity</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">60-70%</div>
+                        <div class="stat-label">Efficiency Gain</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1rem; color: #333;">🎨 Explore Interactive Mockups</h3>
+                <div class="feature-grid">
+                    <a href="dashboard_impact.html" class="feature-card" style="text-decoration: none; color: inherit;">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Impact Dashboard</div>
+                        <div class="feature-desc">Real-time KPIs, charts, and analytics</div>
+                    </a>
+                    <a href="donor_crm.html" class="feature-card" style="text-decoration: none; color: inherit;">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">Donor CRM</div>
+                        <div class="feature-desc">Complete donor management with search</div>
+                    </a>
+                    <a href="project_kanban.html" class="feature-card" style="text-decoration: none; color: inherit;">
+                        <div class="feature-icon">📋</div>
+                        <div class="feature-title">Project Kanban</div>
+                        <div class="feature-desc">Drag-and-drop project tracking</div>
+                    </a>
+                    <a href="knowledge_base.html" class="feature-card" style="text-decoration: none; color: inherit;">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-title">Knowledge Base</div>
+                        <div class="feature-desc">Document repository with search</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 1: Features -->
+        <div class="tab-content" id="tab-1">
+            <div class="demo-frame">
+                <h1 class="demo-title">Key Features</h1>
+                <p class="demo-subtitle">Comprehensive functionality designed for NGO excellence</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">Live Search</div>
+                        <div class="feature-desc">Real-time filtering across donors, documents, and projects</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Drag & Drop</div>
+                        <div class="feature-desc">Intuitive Kanban boards for project management</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Real-time Analytics</div>
+                        <div class="feature-desc">Live dashboards with KPIs and visualizations</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-title">Advanced Security</div>
+                        <div class="feature-desc">2FA, encryption, RBAC, and audit trails</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-title">Mobile Responsive</div>
+                        <div class="feature-desc">Works perfectly on all devices</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-title">Workflow Automation</div>
+                        <div class="feature-desc">Automated approval processes and notifications</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <div class="feature-title">Impact Tracking</div>
+                        <div class="feature-desc">Measure and visualize program outcomes</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <div class="feature-title">Automated Backup</div>
+                        <div class="feature-desc">3-tier backup strategy for data safety</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Modules -->
+        <div class="tab-content" id="tab-2">
+            <div class="demo-frame">
+                <h1 class="demo-title">8 Integrated Modules</h1>
+                <p class="demo-subtitle">Complete solution for all organizational needs</p>
+
+                <div class="info-box">
+                    <div class="info-title">🎯 All Modules Work Together Seamlessly</div>
+                    <p>Data flows automatically between modules. A donor can be linked to projects, donations trigger reports, project outcomes feed into impact dashboards, and everything is searchable from the knowledge base.</p>
+                </div>
+
+                <div style="display: grid; gap: 2rem; margin-top: 2rem;">
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">👥</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">1. Donor CRM</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Complete donor lifecycle management with profiles, donation tracking, campaigns, and automated communications.</p>
+                            <a href="donor_crm.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">📋</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">2. Project Management</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Visual Kanban boards, Gantt charts, budget tracking, milestone monitoring, and resource allocation.</p>
+                            <a href="project_kanban.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">📚</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">3. Knowledge Base</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Centralized document repository with folders, version control, powerful search, and access permissions.</p>
+                            <a href="knowledge_base.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">💡</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">4. Lesson Learned Database</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Structured evaluations with what worked, challenges, and recommendations for continuous improvement.</p>
+                            <a href="lesson_learned.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">💬</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">5. Communities of Practice</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Discussion forums, Q&A platform, voting system, and knowledge sharing across teams.</p>
+                            <a href="communities.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">📊</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">6. Analytical Dashboards</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">Three specialized dashboards: Impact, Fundraising, and Financial with real-time metrics.</p>
+                            <a href="dashboard_impact.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">🔐</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">7. Security & Authentication</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">2FA, SSO, RBAC, encrypted storage, session management, and comprehensive audit logging.</p>
+                            <a href="login.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem;">⚙️</div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #007987; margin-bottom: 0.5rem;">8. Admin Panel</h3>
+                            <p style="color: #666; margin-bottom: 0.5rem;">System administration, user management, monitoring, backup/restore, and configuration.</p>
+                            <a href="admin_panel.html" class="btn btn-primary">View Demo →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Technology -->
+        <div class="tab-content" id="tab-3">
+            <div class="demo-frame">
+                <h1 class="demo-title">Technology Stack</h1>
+                <p class="demo-subtitle">Modern, open-source, and proven technologies</p>
+
+                <div class="info-box">
+                    <div class="info-title">🎯 Why Frappe Framework?</div>
+                    <p><strong>Zero licensing costs</strong>, proven by 10,000+ organizations globally, highly customizable with Python & JavaScript, enables complete data sovereignty through on-premise deployment, and provides a modern tech stack with RESTful APIs and responsive UI.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #007987; margin-bottom: 1rem;">Backend</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Frappe Framework v15</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Python 3.10+</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ MariaDB 10.11 LTS</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Redis 7.x (Caching)</li>
+                            <li style="padding: 0.5rem 0;">✅ RESTful API</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #007987; margin-bottom: 1rem;">Frontend</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ React.js</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Modern JavaScript (ES6+)</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Responsive Design</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Progressive Web App</li>
+                            <li style="padding: 0.5rem 0;">✅ Mobile-First UI</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #007987; margin-bottom: 1rem;">Infrastructure</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Ubuntu 22.04 LTS</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Nginx (Web Server)</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Let's Encrypt SSL</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Prometheus + Grafana</li>
+                            <li style="padding: 0.5rem 0;">✅ Automated Backups</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #007987; margin-bottom: 1rem;">Security</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ TLS 1.3 Encryption</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Two-Factor Auth (2FA)</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ RBAC & Permissions</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">✅ Audit Logging</li>
+                            <li style="padding: 0.5rem 0;">✅ WAF & IDS/IPS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; background: #d4edda; padding: 2rem; border-radius: 10px; border-left: 4px solid #70AD47;">
+                    <h3 style="color: #155724; margin-bottom: 1rem;">💰 100% Open Source = Zero Licensing Costs</h3>
+                    <p style="color: #155724;">Every component in the stack is open-source, meaning <strong>no ongoing license fees</strong>. This significantly reduces Total Cost of Ownership (TCO) and eliminates vendor lock-in risks.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Benefits -->
+        <div class="tab-content" id="tab-4">
+            <div class="demo-frame">
+                <h1 class="demo-title">Business Benefits & ROI</h1>
+                <p class="demo-subtitle">Measurable improvements across all operations</p>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: #70AD47;">70%</div>
+                        <div class="stat-label">Report Gen Time ↓</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: #70AD47;">50%</div>
+                        <div class="stat-label">Data Entry Time ↓</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: #70AD47;">60%</div>
+                        <div class="stat-label">Communication Time ↓</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: #70AD47;">90%</div>
+                        <div class="stat-label">Search Time ↓</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #007987; margin-bottom: 1rem;">⚡ Efficiency Gains</h3>
+                        <ul style="color: #666; line-height: 1.8;">
+                            <li><strong>Report Generation:</strong> From 2-3 days to 2-3 hours (70% reduction)</li>
+                            <li><strong>Data Entry:</strong> 50% reduction through automation and smart forms</li>
+                            <li><strong>Donor Communication:</strong> 60% faster with email automation</li>
+                            <li><strong>Information Search:</strong> From 30 minutes to under 5 seconds (90% reduction)</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #70AD47; margin-bottom: 1rem;">📈 Quality Improvements</h3>
+                        <ul style="color: #666; line-height: 1.8;">
+                            <li><strong>100% Data Centralization:</strong> Single source of truth for all information</li>
+                            <li><strong>Real-time Visibility:</strong> Instant access to current status across all programs</li>
+                            <li><strong>Data-Driven Decisions:</strong> Analytics and dashboards enable informed choices</li>
+                            <li><strong>Increased Donor Trust:</strong> Professional reporting and transparency</li>
+                            <li><strong>Enhanced Collaboration:</strong> Teams work together seamlessly</li>
+                            <li><strong>Institutional Memory:</strong> Knowledge preserved and easily accessible</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #FFC000; margin-bottom: 1rem;">🔒 Security & Compliance</h3>
+                        <ul style="color: #666; line-height: 1.8;">
+                            <li><strong>Data Sovereignty:</strong> On-premise deployment keeps data in Indonesia</li>
+                            <li><strong>Full Encryption:</strong> Data protected at rest and in transit</li>
+                            <li><strong>Granular Access Control:</strong> Role-based permissions ensure data security</li>
+                            <li><strong>Complete Audit Trail:</strong> Every action logged for accountability</li>
+                            <li><strong>3-Tier Backup:</strong> Data protected against all failure scenarios</li>
+                            <li><strong>Real-time Monitoring:</strong> Immediate alerts for security events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Get Started -->
+        <div class="tab-content" id="tab-5">
+            <div class="demo-frame">
+                <h1 class="demo-title">Ready to Get Started?</h1>
+                <p class="demo-subtitle">Explore all mockups and see the system in action</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <a href="index.html" style="text-decoration: none;">
+                        <div style="background: #007987; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🏠</div>
+                            <h3 style="margin-bottom: 0.5rem;">Home</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">All mockups overview</p>
+                        </div>
+                    </a>
+
+                    <a href="dashboard_impact.html" style="text-decoration: none;">
+                        <div style="background: #5B9BD5; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                            <h3 style="margin-bottom: 0.5rem;">Dashboard</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Real-time analytics</p>
+                        </div>
+                    </a>
+
+                    <a href="donor_crm.html" style="text-decoration: none;">
+                        <div style="background: #70AD47; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                            <h3 style="margin-bottom: 0.5rem;">Donor CRM</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Live search demo</p>
+                        </div>
+                    </a>
+
+                    <a href="project_kanban.html" style="text-decoration: none;">
+                        <div style="background: #FFC000; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                            <h3 style="margin-bottom: 0.5rem;">Kanban</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Drag & drop projects</p>
+                        </div>
+                    </a>
+
+                    <a href="knowledge_base.html" style="text-decoration: none;">
+                        <div style="background: #9B59B6; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                            <h3 style="margin-bottom: 0.5rem;">Knowledge</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Document library</p>
+                        </div>
+                    </a>
+
+                    <a href="lesson_learned.html" style="text-decoration: none;">
+                        <div style="background: #E74C3C; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                            <h3 style="margin-bottom: 0.5rem;">Lessons</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Evaluations database</p>
+                        </div>
+                    </a>
+
+                    <a href="communities.html" style="text-decoration: none;">
+                        <div style="background: #3498DB; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                            <h3 style="margin-bottom: 0.5rem;">Communities</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">Discussion forum</p>
+                        </div>
+                    </a>
+
+                    <a href="admin_panel.html" style="text-decoration: none;">
+                        <div style="background: #34495E; color: white; padding: 2rem; border-radius: 12px; text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
+                            <h3 style="margin-bottom: 0.5rem;">Admin</h3>
+                            <p style="opacity: 0.9; font-size: 0.9rem;">System management</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div style="margin-top: 3rem; background: #007987; color: white; padding: 3rem; border-radius: 16px; text-align: center;">
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">🚀 Next Steps</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; line-height: 1.6;">Review the proposal document, explore all interactive mockups, and contact the project team for technical discussions or implementation planning.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="index.html" class="btn btn-success" style="font-size: 1.1rem; padding: 1rem 2rem;">View All Mockups</a>
+                        <a href="login.html" class="btn" style="background: white; color: #007987; font-size: 1.1rem; padding: 1rem 2rem;">Try Login Flow</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-title">INFID SI 2026 - Integrated Information System</div>
+            <p style="color: #666; margin-bottom: 1rem;">Powered by Frappe Framework • 100% Open Source • On-Premise Deployment</p>
+            
+            <div class="footer-stats">
+                <div class="footer-stat">
+                    <div class="footer-stat-value">Rp 485M</div>
+                    <div class="footer-stat-label">Total Investment</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-value">6 Months</div>
+                    <div class="footer-stat-label">Implementation</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-value">8 Modules</div>
+                    <div class="footer-stat-label">Fully Integrated</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-value">60-70%</div>
+                    <div class="footer-stat-label">Efficiency Gain</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; color: #999; font-size: 0.9rem;">
+                © 2026 INFID SI 2026 Proposal • All Interactive Mockups Available
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(index) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + index).classList.add('active');
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
